@@ -1,0 +1,241 @@
+\documentclass[letterpaper,14pt]{extarticle}
+
+\usepackage[landscape,
+            top = 10.3cm,
+            left = 8.5cm,
+            right = 3.3cm,
+            bottom = 0cm]{geometry}
+\usepackage{datatool}
+\usepackage{background}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{fontspec}
+\usepackage[spanish,mexico]{babel}
+\usepackage{anyfontsize}
+\usepackage{graphicx}
+\usepackage{tikzpagenodes}
+\usepackage{adjustbox}
+\usepackage{setspace}
+\usepackage{tikz}
+\usepackage{etoolbox}
+
+\renewcommand{\baselinestretch}{1.2}
+\setlength{\parindent}{0pt}
+
+\newcommand*{\restrictlinewidthbox}[1]{%
+  \begingroup
+    \sbox0{#1}%
+    \ifdim\wd0>\linewidth
+      \resizebox{\linewidth}{!}{\copy0}%
+    \else
+      \copy0 %
+    \fi
+  \endgroup
+}
+
+\DTLloaddb{contestants}{contestants_updated.csv }
+
+\setmainfont[
+    ExternalLocation=fonts/,
+    BoldFont=*-Bold,
+    ItalicFont=*-Italic,
+    ]{GlacialIndifference.otf}[Ligatures=TeX]
+
+\newfontfamily\myfont[
+    ExternalLocation=fonts/,
+    BoldFont=Poppins-ExtraBold.ttf,
+    ]{Poppins-ExtraBold.ttf}[Ligatures=TeX]
+    
+\newfontfamily\bodyfont[
+    ExternalLocation=fonts/,
+    BoldFont=Now-Bold.otf,
+    ]{Now-Regular.otf}[Ligatures=TeX]    
+
+\newfontfamily\namefont[
+    ExternalLocation=fonts/,
+    BoldFont=Now-Bold.otf,
+    ]{Nefelibata-Script.ttf}[Ligatures=TeX]    
+
+\newcommand\olympiad{%
+    {3\textsuperscript{a} Olimpiada Femenil Mexicana de Informática}%
+}
+
+\TPGrid{100}{100}
+
+\pagestyle{empty}
+
+\begin{document}
+
+\DTLforeach{contestants}
+{\name=name, \backgroundtype=backgroundtype, \medalla=medalla}{
+
+\backgroundsetup{
+  scale = 1,
+  angle = 0,
+  opacity = 1,
+  color = black,
+  contents = {
+    \includegraphics[
+      width = \paperwidth,
+      height = \paperheight%,
+      %keepaspectratio
+    ]{background}
+  }
+}
+\ifdefstring\backgroundtype{medalla}{%
+    \newgeometry{top = 3.2cm,
+                 left = 3.3cm,
+                 right = 3.3cm,
+                 bottom = 0cm}
+    \centering
+    \textbf{
+        \fontsize{37}{0}\selectfont\myfont Olimpiada Femenil \\ Mexicana de Informática}\\
+    \vskip 1 cm
+    {\fontsize{14}{0}\selectfont\color[HTML]{9f6741}\bodyfont OTORGA EL DIPLOMA DE MEDALLISTA A:}\\
+    \vskip 1.5 cm
+    {\adjustbox{width=\linewidth, max height=1.2cm}{\fontsize{0.8cm}{0}\selectfont \hbox{\fontsize{1cm}{0}\color[HTML]{720E2D}\namefont\name}}}\\
+    \vskip 1.3cm
+    \begin{spacing}{1.5}
+    {\fontsize{16.5}{0}\selectfont\bodyfont Por haber obtenido medalla de
+    \MakeUppercase{\textbf{\textcolor[HTML]{DC6F76}{\medalla}}} en la \olympiad{} 
+    realizada los días 18 y 19 de noviembre de 2023.}\\
+    \end{spacing}
+    \begin{tikzpicture}[remember picture,overlay,shift={(current page.north east)}]
+        \node[anchor=north east,xshift=-18cm,yshift=-14cm]{\includegraphics[height=3cm]{firma_andrea}};
+    \end{tikzpicture}%
+    \begin{tikzpicture}[remember picture,overlay,shift={(current page.north east)}]
+        \node[anchor=north east,xshift=-6.4cm,yshift=-15cm]{\includegraphics[height=2cm]{firma_joe}};
+    \end{tikzpicture}%
+    \begin{tikzpicture}[remember picture,overlay,shift={(current page.north east)}]
+        \node[anchor=north east,xshift=-0.5cm,yshift=-19.3cm]{\includegraphics[height=1.7cm]{ofmi}};
+    \end{tikzpicture}%
+    \begin{tikzpicture}[remember picture,overlay,shift={(current page.north east)}]
+        \node[anchor=north east,xshift=-23cm,yshift=-19.7cm]{\includegraphics[height=0.9cm]{omegaup}};
+    \end{tikzpicture}%
+}
+
+\ifdefstring\backgroundtype{reconocimiento}{%
+    \newgeometry{top = 3.2cm,
+                 left = 3.3cm,
+                 right = 3.3cm,
+                 bottom = 0cm}
+    \centering
+    \textbf{
+        \fontsize{37}{0}\selectfont\myfont Olimpiada Femenil \\ Mexicana de Informática}\\
+    \vskip 1.2cm
+    {\fontsize{14}{0}\selectfont\color[HTML]{9f6741}\bodyfont OTORGA EL RECONOCIMIENTO A:}\\
+    \vskip 1.5cm
+    {\adjustbox{width=\linewidth, max height=1.2cm}{\hbox{\fontsize{0.8cm}{0}\selectfont  {\fontsize{1cm}{0}\color[HTML]{720E2D}\namefont\name}}}}\\
+    \vskip 1.3cm
+    \begin{spacing}{1.5}
+    {\fontsize{16.5}{0}\selectfont Por haber participado como \textbf{\textcolor[HTML]{DC6F76}{concursante}} en la \olympiad{} realizada los días 18 y 19 de noviembre de 2023.}\\
+    \end{spacing}
+    \begin{tikzpicture}[remember picture,overlay,shift={(current page.north east)}]
+        \node[anchor=north east,xshift=-18cm,yshift=-14cm]{\includegraphics[height=3cm]{firma_andrea}};
+    \end{tikzpicture}%
+    \begin{tikzpicture}[remember picture,overlay,shift={(current page.north east)}]
+        \node[anchor=north east,xshift=-6.4cm,yshift=-15cm]{\includegraphics[height=2cm]{firma_joe}};
+    \end{tikzpicture}%
+    \begin{tikzpicture}[remember picture,overlay,shift={(current page.north east)}]
+        \node[anchor=north east,xshift=-0.5cm,yshift=-19.3cm]{\includegraphics[height=1.7cm]{ofmi}};
+    \end{tikzpicture}%
+    \begin{tikzpicture}[remember picture,overlay,shift={(current page.north east)}]
+        \node[anchor=north east,xshift=-23cm,yshift=-19.7cm]{\includegraphics[height=0.9cm]{omegaup}};
+    \end{tikzpicture}%
+}
+
+\ifdefstring\backgroundtype{comité}{%
+    \newgeometry{top = 3.2cm,
+                 left = 3.3cm,
+                 right = 3.3cm,
+                 bottom = 0cm}
+    \centering
+    \textbf{
+        \fontsize{37}{0}\selectfont\myfont Olimpiada Femenil \\ Mexicana de Informática}\\
+    \vskip 1.2cm
+    {\fontsize{14}{0}\selectfont\color[HTML]{9f6741}\bodyfont OTORGA EL RECONOCIMIENTO A:}\\
+    \vskip 1.5cm
+    {\adjustbox{width=\linewidth, max height=1.2cm}{\hbox{\fontsize{0.8cm}{0}\selectfont  {\fontsize{1cm}{0}\namefont\name}}}}\\
+    \vskip 1.3cm
+    \begin{spacing}{1.5}
+    {\fontsize{16.5}{0}\selectfont Por haber sido \textbf{\textcolor[HTML]{DC6F76}{miembro del comité organizador}} en la \olympiad{}.}\\
+    \end{spacing}
+    \begin{tikzpicture}[remember picture,overlay,shift={(current page.north east)}]
+        \node[anchor=north east,xshift=-18cm,yshift=-14cm]{\includegraphics[height=3cm]{firma_andrea}};
+    \end{tikzpicture}%
+    \begin{tikzpicture}[remember picture,overlay,shift={(current page.north east)}]
+        \node[anchor=north east,xshift=-6.4cm,yshift=-15cm]{\includegraphics[height=2cm]{firma_joe}};
+    \end{tikzpicture}%
+    \begin{tikzpicture}[remember picture,overlay,shift={(current page.north east)}]
+        \node[anchor=north east,xshift=-0.5cm,yshift=-19.3cm]{\includegraphics[height=1.7cm]{ofmi}};
+    \end{tikzpicture}%
+    \begin{tikzpicture}[remember picture,overlay,shift={(current page.north east)}]
+        \node[anchor=north east,xshift=-23cm,yshift=-19.7cm]{\includegraphics[height=0.9cm]{omegaup}};
+    \end{tikzpicture}%
+}
+
+\ifdefstring\backgroundtype{mención}{%
+    \newgeometry{top = 3.2cm,
+                 left = 3.3cm,
+                 right = 3.3cm,
+                 bottom = 0cm}
+    \centering
+    \textbf{
+        \fontsize{37}{0}\selectfont\myfont Olimpiada  Femenil \\ Mexicana  de 
+ Informática}\\
+    \vskip 1 cm
+    {\fontsize{14}{0}\selectfont\color[HTML]{9f6741}\bodyfont OTORGA EL RECONOCIMIENTO A:}\\
+    \vskip 1.5 cm
+    {\adjustbox{width=\linewidth, max height=1.2cm}{\fontsize{1.2cm}{0}\selectfont  \hbox{\fontsize{1.2cm}{0}\color[HTML]{720E2D}\namefont\name}}}\\
+    \vskip 1.3cm
+    \begin{spacing}{1.5}
+    {\fontsize{16.5}{0}\selectfont\bodyfont Por haber obtenido \textbf{\textcolor[HTML]{DC6F76}{Mención Honorífica}} en la \olympiad{} 
+    realizada los días 18 y 19 de noviembre de 2023.}\\
+    \end{spacing}
+    \begin{tikzpicture}[remember picture,overlay,shift={(current page.north east)}]
+        \node[anchor=north east,xshift=-18cm,yshift=-14cm]{\includegraphics[height=3cm]{firma_andrea}};
+    \end{tikzpicture}
+    \begin{tikzpicture}[remember picture,overlay,shift={(current page.north east)}]
+        \node[anchor=north east,xshift=-6.4cm,yshift=-15cm]{\includegraphics[height=2cm]{firma_joe}};
+    \end{tikzpicture}
+    \begin{tikzpicture}[remember picture,overlay,shift={(current page.north east)}]
+        \node[anchor=north east,xshift=-0.5cm,yshift=-19.3cm]{\includegraphics[height=1.7cm]{ofmi}};
+    \end{tikzpicture}
+    \begin{tikzpicture}[remember picture,overlay,shift={(current page.north east)}]
+        \node[anchor=north east,xshift=-23cm,yshift=-19.7cm]{\includegraphics[height=0.9cm]{omegaup}};
+    \end{tikzpicture}
+}
+
+\ifdefstring\backgroundtype{problemsetter}{%
+    \newgeometry{top = 3.2cm,
+                 left = 3.3cm,
+                 right = 3.3cm,
+                 bottom = 0cm}
+    \centering
+    \textbf{
+        \fontsize{37}{0}\selectfont\myfont Olimpiada Femenil \\ Mexicana de Informática}\\
+    \vskip 1 cm
+    {\fontsize{14}{0}\selectfont\color[HTML]{9f6741}\bodyfont OTORGA EL RECONOCIMIENTO A:}\\
+    \vskip 1.5 cm
+    {\adjustbox{width=\linewidth, max height=1.2cm}{\fontsize{0.8cm}{0}\selectfont  \hbox{\fontsize{1cm}{0}\color[HTML]{720E2D}\namefont\name}}}\\
+    \vskip 1.3cm
+    \begin{spacing}{1.3}
+    {\fontsize{16.5}{0}\selectfont Por haber participado como
+    \textbf{\textcolor[HTML]{DC6F76}{Problem Setter}} en el \textit{\textcolor[HTML]{DC6F76}{Call for Tasks}}
+    de la \olympiad{} ayudando a formar un examen de calidad.}\\
+    \end{spacing}
+    \begin{tikzpicture}[remember picture,overlay,shift={(current page.north east)}]
+        \node[anchor=north east,xshift=-18cm,yshift=-14cm]{\includegraphics[height=3cm]{firma_andrea}};
+    \end{tikzpicture}
+    \begin{tikzpicture}[remember picture,overlay,shift={(current page.north east)}]
+        \node[anchor=north east,xshift=-6.4cm,yshift=-15cm]{\includegraphics[height=2cm]{firma_joe}};
+    \end{tikzpicture}
+    \begin{tikzpicture}[remember picture,overlay,shift={(current page.north east)}]
+        \node[anchor=north east,xshift=-0.5cm,yshift=-19.3cm]{\includegraphics[height=1.7cm]{ofmi}};
+    \end{tikzpicture}
+    \begin{tikzpicture}[remember picture,overlay,shift={(current page.north east)}]
+        \node[anchor=north east,xshift=-23cm,yshift=-19.7cm]{\includegraphics[height=0.9cm]{omegaup}};
+    \end{tikzpicture}
+}
+\clearpage
+}
+\end{document}
