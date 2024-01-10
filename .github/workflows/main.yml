@@ -1,0 +1,22 @@
+name: Make Diplomas
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: koppor/texlive
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: mklatex
+        run: chmod +x make-diplomas.sh && ./make-diplomas.sh
+      
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: All Documents
+          path: all-documents.zip
